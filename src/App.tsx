@@ -1,5 +1,4 @@
 import React from 'react';
-import { RefactorActionInfo } from 'typescript';
 import { QuestionCard } from './components/QuestionCard';
 
 function App() {
