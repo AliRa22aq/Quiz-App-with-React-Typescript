@@ -5,11 +5,11 @@ type Props = {
     asnwer: string[];
     callback: any;
     userAnswer: string;
-    QuestionNumber: number;
+    questionNumber: number;
     totalQuestions: number;
 }
 
-export const QuestionCard: React.FC<Props> = ({}) => {
+export const QuestionCard: React.FC<Props> = ({question, asnwer, callback, userAnswer, questionNumber, totalQuestions}) => {
     return (
         <div>
             Questions
