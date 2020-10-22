@@ -1,4 +1,9 @@
+import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { AnswerObject } from '../App';
+
+
+
 
 type Props = {
     question: string;
@@ -10,14 +15,15 @@ type Props = {
 }
 
 export const QuestionCard: React.FC<Props> = ({ question, asnwers, callback, userAnswer, questionNumber, totalQuestions }) => {
+    console.log(userAnswer)
     return (
         <div>
-            <p className="number"> Question : {questionNumber} / {totalQuestions} </p> 
+            <p className="number"> Question : {questionNumber + 1} / {totalQuestions} </p> 
             <p dangerouslySetInnerHTML={{__html: question}} /> 
             <div> 
                 {asnwers.map((answer) => (
                     <div key ={answer}>
-                        <button disabled={userAnswer} value={answer} onClick={callback}>
+                        <button disabled={userAnswer ? true:false} value={answer} onClick={callback}>
                             <span dangerouslySetInnerHTML={{ __html: answer }} />
                         </button>
                     </div>
