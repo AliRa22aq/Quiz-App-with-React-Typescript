@@ -1,8 +1,4 @@
-import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { AnswerObject } from '../App';
-
-
 
 
 type Props = {
