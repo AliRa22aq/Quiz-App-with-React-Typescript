@@ -2,17 +2,30 @@ import React from 'react';
 
 type Props = {
     question: string;
-    asnwer: string[];
+    asnwers: string[];
     callback: any;
-    userAnswer: string;
+    userAnswer: any;
     questionNumber: number;
     totalQuestions: number;
 }
 
-export const QuestionCard: React.FC<Props> = ({ question, asnwer, callback, userAnswer, questionNumber, totalQuestions }) => {
+export const QuestionCard: React.FC<Props> = ({ question, asnwers, callback, userAnswer, questionNumber, totalQuestions }) => {
     return (
         <div>
-            Questions
+            <p className="number"> Question : {questionNumber} / {totalQuestions} </p> 
+            <p dangerouslySetInnerHTML={{__html: question}} /> 
+            <div> 
+                {asnwers.map((answer) => (
+                    <div key ={answer}>
+                        <button disabled={userAnswer} value={answer} onClick={callback}>
+                            <span dangerouslySetInnerHTML={{ __html: answer }} />
+                        </button>
+                    </div>
+                ))
+                }
+
+            </div>
+
         </div>
     )
 }
