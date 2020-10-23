@@ -79,7 +79,7 @@ function App() {
 
       <Wrapper>
 
-        <h1> Quiz </h1>
+        <h1> PIAIC Quiz </h1>
 
         {
           gameOver || userAnswers.length === totalQuestions ?
@@ -148,13 +148,6 @@ function App() {
         {!gameOver && !loading && userAnswers.length === number + 1 && number !== totalQuestions - 1 && (
           <button className="next" onClick={nextQuestion} > Next </button>
         )}
-
-        {
-          userAnswers.length === totalQuestions ?
-          <p style={{color: "black", fontSize: "2rem"}}> Result : {score} / {totalQuestions}  </p> :
-          null
-        }
-
 
       </Wrapper>
     </>
