@@ -29,6 +29,14 @@ export const Wrapper = styled.div`
     font-size: 2rem;
     margin: 0;
   }
+  .startData {
+    color: #000;
+    font-size: 1.5rem;
+    margin: 5%;
+        
+  }
+
+
   h1 {
     font-family: Fascinate Inline;
     background-image: linear-gradient(180deg, #fff, #87f1ff);
@@ -57,4 +65,32 @@ export const Wrapper = styled.div`
   .start {
     max-width: 200px;
   }
+
+  .loading {
+    color: #fff;
+  }
+
+  select {
+    display: block;
+    font-size: 16px;
+    font-family: sans-serif;
+    font-weight: 700;
+    color: #444;
+    line-height: 1.3;
+    padding: .6em 1.4em .5em .8em;
+    width: 100%;
+    max-width: 100%; /* useful when width is set to anything other than 100% */
+    box-sizing: border-box;
+    margin: 1rem;
+    border: 1px solid #aaa;
+    box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+    border-radius: .5em;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;  
+  }
+
+
+
 `;

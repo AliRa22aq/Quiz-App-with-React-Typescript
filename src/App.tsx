@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { QuestionCard } from './components/QuestionCard';
-import { fetchQuizQuestions, Difficulty, QuestionState } from './API';
-import { GlobalStyle, Wrapper} from './App.styles';
+import { fetchQuizQuestions, QuestionState } from './API';
+import { GlobalStyle, Wrapper } from './App.styles';
+import { Data } from './components/SelectData';
 
 export type AnswerObject = {
   question: string;
@@ -9,8 +10,6 @@ export type AnswerObject = {
   correct: boolean;
   correctAnswer: string;
 }
-
-const TOTAL_QUESTIONS = 10;
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -20,13 +19,18 @@ function App() {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
 
+  const [totalQuestions, setTotalQuestions] = useState(5);
+  const [difficulty, setDifficulty] = useState("easy");
+  const [catagory, setCatagory] = useState(9);
+
   const startQuiz = async () => {
     setLoading(true);
     setGameOver(false);
 
     const newQuestion = await fetchQuizQuestions(
-      TOTAL_QUESTIONS,
-      Difficulty.EASY
+      totalQuestions,
+      catagory,
+      difficulty
     )
 
     setQuestions(newQuestion);
@@ -61,7 +65,7 @@ function App() {
   const nextQuestion = () => {
     const nextQuestion = number + 1;
 
-    if (nextQuestion === TOTAL_QUESTIONS) {
+    if (nextQuestion === totalQuestions) {
       setGameOver(true)
     }
     else {
@@ -69,17 +73,55 @@ function App() {
     }
   };
 
-
   return (
     <>
       <GlobalStyle />
 
       <Wrapper>
 
-        <h1> React Quiz </h1>
+        <h1> Quiz </h1>
+
         {
-          gameOver || userAnswers.length === TOTAL_QUESTIONS ?
+          gameOver || userAnswers.length === totalQuestions ?
+            (
+              <div className="startData">
+                Number of Questions
+                <select  defaultValue={5} onChange={(e) => { setTotalQuestions(Number(e.target.value)) }}>
+                  {Data.questions.map((v) => {
+                    return (
+                      <option value={v} > {v} </option>
+                    )
+                  })}
+                </select>
+
+                Category
+                <select onChange={(e) => { setCatagory(Number(e.target.value)) }}>
+                  {Object.entries(Data.category).map(([k, v]) => {
+                    return (
+                      <option value={v} > {k} </option>
+                    )
+                  })}
+                </select>
+
+                Difficulty
+                <select onChange={(e) => { setDifficulty(e.target.value) }}>
+                {Object.entries(Data.difficulty).map(([k, v]) => {
+                    return (
+                      <option value={v} > {k} </option>
+                    )
+                  })}
+                </select>
+              </div>
+              ) :
+            null
+        }
+
+
+        {
+          gameOver ?
             (<button className="start" onClick={startQuiz}> Start </button>) :
+            userAnswers.length === totalQuestions ?
+            (<button className="start" onClick={startQuiz}> Restart </button>) :
             null
         }
 
@@ -88,24 +130,31 @@ function App() {
         }
 
         {
-          loading ? <p> Loading . . . </p> : null
+          loading ? <p style={{color: "black", fontSize: "2rem"}}> Loading . . . </p> : null
         }
 
-        {!loading && !gameOver && (
+        {!loading && !gameOver && userAnswers.length !== totalQuestions && (
 
           <QuestionCard
             questionNumber={number}
-            totalQuestions={TOTAL_QUESTIONS}
+            totalQuestions={totalQuestions}
             question={questions[number].question}
             asnwers={questions[number].answer}
             userAnswer={userAnswers ? userAnswers[number] : undefined}
             callback={checkAnswer}
 
-            />)}
+          />)}
 
-        {!gameOver && !loading && userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1 && (
+        {!gameOver && !loading && userAnswers.length === number + 1 && number !== totalQuestions - 1 && (
           <button className="next" onClick={nextQuestion} > Next </button>
         )}
+
+        {
+          userAnswers.length === totalQuestions ?
+          <p style={{color: "black", fontSize: "2rem"}}> Result : {score} / {totalQuestions}  </p> :
+          null
+        }
+
 
       </Wrapper>
     </>
